@@ -1,0 +1,96 @@
+{% if categories %}
+<div id="menu" class="right-side navbar-collapse">
+    <ul class="nav navbar-nav">
+        {# <li class="level"><a href="index.php" class="page-scroll">HOME <div class="menu-label"></div> </a></li> #}
+        <li class="level">
+            <a href="#" class="page-scroll">Brand <div class="menu-label"></div></a>
+            <ul class="subcategory">
+                <li style="display:inline-block; margin-right:15px;"><a href="../pan_sportswear/">Pan Sportwear</a></li>
+                <li style="display:inline-block; margin-right:15px;"><a href="../heelcare_thailand/">Heel Care</a></li>
+                <li style="display:inline-block; margin-right:15px;"><a href="../kappa_thailand/">Kappa</a></li>
+            </ul>
+        </li>
+        {% if categories %} 
+            {% for category in categories %}
+            <li class="level">
+            	<a href="{{ category.href }}" class="page-scroll">{{ category.name }} <div class="menu-label"></div> </a>
+                {% if category.children %}
+                <ul class="subcategory">
+                    {% for child in category.children %}
+                    <li>
+                        <a href="{{ child.href }}">{{ child.name }}</a>
+                        {% if child.products %}
+                        <ul class="products">
+                            {% for product in child.products %}
+                            <li><a href="{{ product.href }}"><img src="{{ product.image }}" alt=""><br><div>{{product.name}}</div></a></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %} 
+        {% endif %}
+        <li class="level"><a href="{{ link_payment }}" class="page-scroll">PAYMENT <div class="menu-label"></div> </a></li>
+    </ul>
+</div>
+
+{% endif %}
+
+<script>
+$(document).ready(function() {
+    $('#menu ul.navbar-nav > li.level').hover(function() {
+        // $('#menu .products').hide();
+        cancelCountDown();
+        $('.subcategory').removeClass('active');
+        $(this).children('.subcategory').addClass('active');
+    }, function() {
+        countDownClearMenu();
+    });
+
+    $('#menu .subcategory > li').hover(function() {
+        cancelCountDown();
+        $('.products').removeClass('active');
+        $(this).children('.products').addClass('active');
+    }, function() {
+        // countDownClearMenu();
+    });
+
+    var cdTimeout;
+
+    function countDownClearMenu() {
+        cdTimeout = setTimeout(function(){ 
+            $('#menu .products').removeClass('active');
+            $('#menu .subcategory').removeClass('active');
+        }, 1000);
+    }
+
+    function cancelCountDown() {
+        clearTimeout(cdTimeout);
+    }
+});
+
+</script>
+
+<style>
+    #header .header-inner { position: relative; }
+    #header .row,
+    #header .col-sm-10.right-side,
+    #menu,
+    #menu ul.nav,
+    #menu .level { position: inherit; }
+    #menu .subcategory { width: 100%; position: absolute; left:0; background: #8288b3; padding: 10px 10px; margin-top: 5px; display: none; }
+    #menu .subcategory.active { display: block; }
+    #menu .subcategory li a { color:#fff; }
+    #menu .products { position: absolute; width: 100%; margin-top: 15px; background: #fff; left: 0; display: none; -webkit-box-shadow: 0px 5px 20px 0px rgba(51,51,51,1); -moz-box-shadow: 0px 5px 20px 0px rgba(51,51,51,1); box-shadow: 0px 5px 20px 0px rgba(51,51,51,1); }
+    #menu .products.active { display: block; }
+    #menu .products li { display: inline-block; width:19.5%; }
+    #menu .products a { display: block; width:100%; }
+    #menu .products a,
+    #menu .products a img,
+    #menu .products a img { width: 100%; }
+    #menu .products a > div { cursor: pointer; margin-bottom:10px; }
+    #menu .products a > div { color: #333; text-align: center; }
+</style>

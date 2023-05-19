@@ -1,0 +1,232 @@
+{{ header }}
+<div id="information-information" class="container" style="margin-top:140px;">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+     {% if column_left and column_right %}
+     {% set class = 'col-sm-6' %}
+     {% elseif column_left or column_right %}
+     {% set class = 'col-sm-9' %}
+     {% else %}
+     {% set class = 'col-sm-12' %}
+     {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>{{ heading_title }}</h1> 
+         <form  action="{{ action }}"   method="post" enctype="multipart/form-data"  class="form-horizontal">
+           <fieldset> 
+            <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}  </label>
+		    <div class="col-sm-5">
+		      <input type="text" name="name" value="{{ name }}"   id="input-name" class="form-control" />
+		      {% if error_name   %}
+		         <div class="text-danger">{{ error_name }}  </div>
+		      {% endif %}
+		    </div>
+          </div> 
+            <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-name">{{ entry_tel }}  </label>
+		    <div class="col-sm-5">
+		      <input type="text" name="tel" value="{{ tel }}"   id="input-tel" class="form-control" />
+		        {% if  error_tel   %}
+		          <div class="text-danger">{{ error_tel }}  </div>
+		       {% endif %}
+		    </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-orderno">{{ text_orderno }}  </label>
+            <div class="col-sm-5">
+              <input type="text" name="orderno" value="{{ orderno }}"   id="input-orderno" class="form-control" />
+                  {% if error_orderno %}
+                     <div class="text-danger">{{ error_orderno }}  </div>
+                  {% endif %}
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-amount_paid">{{ text_amount_paid }}</label>
+            <div class="col-sm-5">
+              <input type="text" name="amount_paid" value="{{ amount_paid }}"   id="input-amount_paid" class="form-control" />
+                 {% if  error_amount_paid  %}
+                    <div class="text-danger">{{ error_amount_paid }}  </div>
+               {% endif %}
+            </div>
+          </div>  
+          <div class="form-group required">
+		    <label class="col-sm-2 control-label">{{ text_bank_account }}  </label>
+		    <div class="col-sm-5">
+		      {% for  bankaccount in  bankaccounts    %}
+		      <div class="radio">
+			   <label>  
+			      <style type="text/css">
+				       input[type="radio"]:focus + img  {  border:2px solid #000;  }
+					   input[type="radio"]  + img {  border:2px solid #eee; }
+				  </style>
+		
+			      <div class="col-xs-3" >
+				   <input bank_id="{{ bankaccount.bank_id }}"   style="height:70px;" type="radio" {{ bank_id == bankaccount.bank_id ? 'checked="checked"'}} value="{{ bankaccount.bankname }}"  name="bank" >
+				 
+				   <img   src="{{ bankaccount.thumb }}" style="width:400px;" ></div>
+			       <span  class="col-xs-9" style="  float: right;min-width: 270px; padding-left: 100px;position: absolute;top:20px;  ">{{ bankaccount.bankname }}</span>
+			    </label>
+		      </div>
+		    {% endfor  %}
+			  <input class="bank_id" type="hidden"  name="bank_id"  value="{{ bank_id }}"  >
+		     {% if   error_bank  %}
+		      <div class="text-danger">{{ error_bank }}  </div>
+		       {% endif %}
+		    </div>
+	  </div>
+ 
+         <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-transfer_date"> {{ text_transfer_date }}  </label>
+            <div class="col-sm-3">
+              <div class="input-group datetime"><input type="text" name="transfer_date" value="{{ transfer_date }}" data-format="YYYY-MM-DD" id="input-transfer_date" class="form-control" /><span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span></div>
+			      {%  if error_transfer_date %}
+		              <div class="text-danger" >{{ error_transfer_date  }} </div>
+		          {% endif %}
+            </div>
+          </div> 
+ 
+	    <br />
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-date-ordered">{{ entry_email }}</label>
+            <div class="col-sm-3">
+              <input type="text" name="email" value="{{ email }}"   id="input-email" class="form-control" />
+			    {% if error_email %}
+		            <div class="text-danger">{{ error_email }}  </div>
+		         {% endif %}
+            </div>
+          </div> 
+          
+		  <div class="form-group ">
+            <label class="col-sm-2 control-label" for="input-enquiry">{{ entry_enquiry }}</label>
+            <div class="col-sm-5">
+              <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control">{{ enquiry }}</textarea>
+            </div>
+          </div> 
+		  
+		  <div class="form-group">
+               <label class="col-sm-2 control-label" for="input-captcha">{{ entry_slip }}</label>
+			   <div class="col-sm-3"> <button type="button"   id="button-upload"   data-loading-text="{{ upload_slip }}"  class="btn btn-default btn-block"><i class="fa fa-upload"></i> {{ upload_slip }}</button>
+			         {% if error_file_code   %}
+		                <div class="text-danger">{{ error_file_code }}  </div>
+		            {% endif %}
+				   <label  class="file_uploaded" >{{ file_uploaded }}</label>
+				   <input type="hidden" name="file_code"  id="input_filecode"    value="{{ file_code }}"    />
+				   <input type="hidden" name="file_uploaded" id="input_realname"   />
+			  </div>
+          </div>
+		  
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-captcha">{{ entry_captcha }}</label>
+            <div class="col-sm-3">
+              <input type="text" name="captcha" id="input-captcha" class="form-control" />
+            </div>
+          </div>
+		  
+          <div class="form-group">
+            <div class="col-sm-10 pull-right">
+              <img src="index.php?route=tool/captcha" alt="" />
+                 {% if error_captcha %}
+                       <div class="text-danger">{{ error_captcha }}  </div>
+                {% endif %}
+            </div>
+          </div>
+ 
+        </fieldset>
+         <div class="buttons">
+	         <label class="col-sm-2 control-label"></label>
+             <input class="btn btn-primary" type="submit" value="{{ button_continue }}" />
+          </div>
+	 </form>
+  
+    {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+ <br><br>
+<style>
+	.form-group.required label { color:#333; }
+	.form-group.required label:after { content: ' *'; color:red; }
+	.form-group label { color:#333; }
+</style>
+<script type="text/javascript"><!--
+
+$('.date').datetimepicker({
+	language: '{{ datepicker }}',
+	pickTime: false
+});
+
+$('.datetime').datetimepicker({
+	language: '{{ datepicker }}',
+	pickDate: true,
+	pickTime: true
+});
+
+$('.time').datetimepicker({
+	language: '{{ datepicker }}',
+	pickDate: false
+});
+
+$('input[name=\'bank\']').on('click', function() { 
+	$('.bank_id').val($(this).attr('bank_id'))
+});
+
+$('button[id^=\'button-upload\']').on('click', function() {
+ 
+	var node = this;
+	var pathupload = "{{ path_upload }}";
+	$('#form-upload').remove();
+	
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+	
+	$('#form-upload input[name=\'file\']').trigger('click');
+	if(typeof timer !='undefined'){
+    clearInterval(timer);
+     }
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+			
+			$.ajax({
+				url: 'index.php?route=tool/slip_upload',
+				type: 'post',
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]) ,
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+				    $('.file_uploaded span').remove();
+					$(node).button('loading');
+				},
+				complete: function() {
+					$(node).button('reset');
+				},
+				success: function(json) {
+					$('.text-danger').remove();
+					
+					if (json['error']) {
+						$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+					}
+					
+					if (json['success']) {
+						 
+					    $('#input_filecode').val(json['code']);
+						$('#input_realname').attr('value',   json['realname']);
+						$('.file_uploaded').append('<span>Slip ' + json['realname']  + ' has been uploaded</span>');
+					 					 
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		}
+	}, 500);
+});
+//--></script> 
+{{ footer }} 
