@@ -1,0 +1,15 @@
+<?php
+// Heading
+$_['heading_title']       = 'ส่วนลด';
+// Text
+$_['text_success']      = 'Success: You have modified totals!';
+$_['text_list']         = 'ประเภทส่วนลด';
+
+// Column
+$_['column_name']       = 'Order Totals';
+$_['column_status']     = 'Status';
+$_['column_sort_order'] = 'Sort Order';
+$_['column_action']     = 'Action';
+ 
+// Error
+$_['error_permission']  = 'Warning: You do not have permission to modify totals!';

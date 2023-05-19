@@ -1,0 +1,113 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {%  for breadcrumbs in breadcrumb %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {%  endfor  %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+ 
+    {%  if  error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {%  endif  %}
+    {%  if  success %}
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {%  endif  %}
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ heading_title }}</h3>
+      </div>
+
+     <div class="panel-body">
+      <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal"  >
+        
+          <div class="form-group required">
+	    <label class="col-sm-2 control-label"  >{{ entry_bankinfo }}</label>
+            <div class="col-sm-10">
+	       <input type="text" name="banklist" value="{{ banklist }}"  class="form-control" /> 
+               
+            </div>
+            </div>
+ 
+           <div class="form-group required">
+	       <label class="col-sm-2 control-label"  >{{ entry_bankname }}</label>
+               <div class="col-sm-10">
+                <input type="text" name="bankname" value="{{ bankname }}"  class="form-control"  />  
+                {%  if  error_name %}
+                 <div class="text-danger">{{ error_name }}</div>
+                {%  endif  %}</td>
+              </div>
+               
+
+            </div>
+
+	    <div class="form-group required">
+	      <label class="col-sm-2 control-label"  >{{ entry_accname }}</label>
+	      <div class="col-sm-10">
+                 <input type="text" name="acc_name" value="{{ acc_name }}"   class="form-control" />  
+                
+               </div>
+           </div>
+           
+	    <div class="form-group required">
+	      <label class="col-sm-2 control-label"  >{{ entry_bankno }}</label>
+	       <div class="col-sm-10">
+                <input type="text" name="acc_no" value="{{ acc_no }}" class="form-control" /> 
+               
+	        </div>
+           </div>
+
+	  
+            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                    <div class="col-sm-10">
+                      <select name="status" id="input-status" class="form-control">
+                        {%  if  status %}
+                        <option value="1" selected="selected">{{ text_enabled }}</option>
+                        <option value="0">{{ text_disabled }}</option>
+                        {% else  %}
+                        <option value="1">{{ text_enabled }}</option>
+                        <option value="0" selected="selected">{{ text_disabled }}</option>
+                        {%  endif  %}
+                      </select>
+                    </div>
+          </div>
+               <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_image }}</label>
+                <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}"  data-placeholder="{{ placeholder }}" /></a>
+                  <input type="hidden" name="image" value="{{ image }}" id="input-image" />
+                </div>
+              </div>
+
+          
+           <div class="form-group ">
+	    <label class="col-sm-2 control-label" for="input-status">{{ entry_sort_order }}</label>
+              <div class="col-sm-10">
+              <input type="text" name="sort_order" value="{{ sort_order }}" size="1"  class="form-control" /> 
+              </div>
+           </div>
+       
+
+      </form>
+
+      </div><!--end panel-body  -->
+    </div><!--end panel -->
+  </div><!-- container-fluid  -->
+</div><!-- contain  -->
+
+
+{{ footer }}
