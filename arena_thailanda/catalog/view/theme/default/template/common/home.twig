@@ -1,0 +1,280 @@
+{{ header }}
+<div id="common-home">
+    <!-- BANNER STRAT -->
+    <div class="banner">
+        <div class="main-banner">
+            {% set i = 1 %}
+            {% for banner in banners_home %}
+            <div class="banner-1"> <img src="{{ banner.image }}" alt="Eshoper">
+                <div class="banner-detail">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-9 col-xs-8">
+                                <div class="banner-detail-inner">
+                                    <span class="slogan">{{ banner.topic }}</span>
+                                    <h1 class="banner-title">{{ banner.title }}</h1>
+                                    <span class="offer">{{ banner.introduction }}</span>
+                                </div>
+                                {% if banner.link %}
+                                <a class="btn btn-color big" href="{{ banner.link }}">Read More!</a>
+                                {% endif %}
+                            </div>
+                            <div class="col-sm-3 col-xs-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% set i = i + 1 %}
+            {% endfor %}
+        </div>
+    </div>
+    <!-- BANNER END -->
+
+    <!-- CONTAIN START -->
+
+    <!-- SUB-BANNER START -->
+    <section class="pt-95">
+        <div class="container">
+            <div class="sub-banner-block center-sm">
+                <div class="row ">
+                    {% for banner2 in banner2 %}
+                    <div class="col-md-6 col-sm-12 ">
+                        <div class="sub-banner sub-banner1">
+                            <img alt="Eshoper" src="{{banner2.image}}">
+                            <div class="sub-banner-detail">
+                                <div class="row">
+                                    <div class="col-lg-5"></div>
+                                    <div class="col-lg-7">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="col-md-6 col-sm-12 ">
+                    {{ vdo }}
+                    {# <iframe width="100%" height="450" src="https://www.youtube.com/embed/KZTQjaMXnTI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> #}
+                        {# <div class="row">
+                        
+                            {% for brand in brands %}
+                            <div class="col-md-6 col-sm-6 ">
+                                <div class="sub-banner sub-banner3">
+                                    {% if brand.link %}
+                                    <a href="{{ brand.link }}">
+                                    {% endif %}
+                                    <img alt="{{brand.title}}" src="{{brand.image}}">
+                                    {% if brand.link %}
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div> #}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- SUB-BANNER END -->
+
+    <!--  Featured Products Slider Block Start  -->
+    <section class="ptb-95">
+        <div class="container">
+            <div class="product-listing">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="heading-part mb-40">
+                            <h2 class="main_title">Featured <span>Products</span></h2>
+                            <a href="{{seemore}}" class="btn btn-color small right-side">See All</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mlr_-20">
+                    <div class="pro_cat">
+                        {% for product in product_bestseller %}
+                        <div class="col-md-3 col-sm-6 col-xs-6 plr-20 mb-30">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <a href="{{ product.href }}">
+                                        <img src="{{ product.image }}" alt="Eshoper">
+                                    </a>
+                                    <div class="product-detail-inner">
+                                        <div class="detail-inner-left left-side">
+                                            <ul>
+                                                <li class="pro-cart-icon">
+                                                    <form>
+                                                        <button title="Add to Cart" type="button" onclick="cart.add('{{ product.product_id }}', '1');"><span></span>Add to Cart</button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="detail-inner-left right-side">
+                                            <ul>
+                                                <li class="pro-wishlist-icon active">
+                                                    <a title="Wishlist" onclick="wishlist.add('{{ product.product_id }}');" ></a>
+                                                </li>
+                                                <li class="pro-compare-icon">
+                                                    <a title="Compare" onclick="compare.add('{{ product.product_id }}');" ></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-item-details">
+                                    <div class="product-item-name"> 
+                                        <a href="product-page.php" >{{ product.name }} {% if product.special %}<span style="color:red;display:inline-block;"><b>SALE {{ product.percent }}%</b></span>{% endif %}</a> 
+                                        
+                                    </div>
+                                    <div class="price-box"> 
+                                        {% if product.special %}
+                                        <span class="price">{{ product.special }}</span> 
+                                        <del class="price old-price">{{ product.price }}</del> 
+                                        {% else %}
+                                        <span class="price">{{ product.price }}</span> 
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="rating-summary-block right-side">
+                                        <div title="{{product.rating}}%" class="rating-result"> <span style="width:{{product.rating}}%"></span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--  Featured Products Slider Block End  -->
+
+    <!-- perellex-banner Start -->
+    <section>
+        <div class="perellex-banner" style="background:rgba(0, 0, 0, 0) url('{{banner_under.image}}') no-repeat fixed center center;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-xs-0"></div>
+                    <div class="col-sm-8 col-xs-12">
+                        <div class="perellex-delail ptb-95 align-center">
+                        {% if banner_under.topic %}
+                            <div class="perellex-offer mtb-20">{{banner_under.topic}}</div>
+                            <span class="line-bottom"></span>
+                        {% endif %}
+                        {% if banner_under.title %}
+                            <div class="perellex-title ">{{banner_under.title}}</div>
+                        {% endif %}
+                        {% if banner_under.introduction %}
+                            <div class="perellex-sub-title ">{{banner_under.introduction}}</div>
+                        {% endif %}
+                            <a href="index.php?route=product/category&path=103" class="btn btn-color big">Shop Now!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- perellex-banner Start -->
+
+    <section class="ptb-95">
+        <div class="cat-block">
+            <div class="container">
+                <div class="">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="heading-part mb-40">
+                                    <h2 class="main_title">Best <span>seller</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-slider owl-slider mb-xs-30">
+                            <div class="row ">
+                                <div class="owl-carousel best-seller-pro">
+                                    {% for product in firsthalf %}
+                                    <div class="item ">
+                                        <div class="cat-box">
+                                            <div class="cat-box-inner">
+                                                <ul>
+                                                    <li>
+                                                        <div class="pro-media">
+                                                            <a href="{{product.href}}"><img src="{{product.image}}" alt="Eshoper"></a>
+                                                        </div>
+                                                        <div class="pro-detail-info">
+                                                            <div class="rating-summary-block">
+                                                                <div title="{{product.rating}}%" class="rating-result">
+                                                                    <span style="width:{{product.rating}}%"></span>
+                                                                </div>
+                                                            </div>
+                                                            <a href="{{product.href}}">{{product.name}} {% if product.special %}<span style="color:red;display:inline-block;"><b>SALE {{ product.percent }}%</b></span>{% endif %}</a>
+                                                            <div class="price-box">
+                                                                {% if product.special %}
+                                                                <span class="special">{{product.special}}</span>
+                                                                <del class="price">{{product.price}}</del>
+                                                                {% else %}
+                                                                <span class="price">{{product.price}}</span>        
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="cart-link">
+                                                                <form>
+                                                                    <button type="button" title="Add to Cart" onclick="cart.add('{{ product.product_id }}', '1');"><span></span>Add To Cart</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    
+                                                    {% if secondhalf[loop.index].image %}
+                                                    <li>
+                                                        <div class="pro-media">
+                                                            <a href="{{secondhalf[loop.index].href}}"><img src="{{secondhalf[loop.index].image}}" alt="Eshoper"></a>
+                                                        </div>
+                                                        <div class="pro-detail-info">
+                                                            <div class="rating-summary-block">
+                                                                <div title="{{secondhalf[loop.index].rating}}%" class="rating-result">
+                                                                    <span style="width:{{secondhalf[loop.index].rating}}%"></span>
+                                                                </div>
+                                                            </div>
+                                                            <a href="{{secondhalf[loop.index].href}}">{{secondhalf[loop.index].name}} {% if secondhalf[loop.index].special %}<span style="color:red;display:inline-block;"><b>SALE {{ secondhalf[loop.index].percent }}%</b></span>{% endif %}</a>
+                                                            <div class="price-box">
+                                                                {% if secondhalf[loop.index].special %}
+                                                                <span class="special">{{secondhalf[loop.index].special}}</span>
+                                                                <del class="price">{{secondhalf[loop.index].price}}</del>
+                                                                {% else %}
+                                                                <span class="price">{{secondhalf[loop.index].price}}</span>        
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="cart-link">
+                                                                <form>
+                                                                    <button title="Add to Cart" type="button" onclick="cart.add('{{ secondhalf[loop.index].product_id }}', '1');"><span></span>Add To Cart</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    /* ------------ Newslater-popup JS Start ------------- */
+    /*$(window).load(function() {
+        $.magnificPopup.open({
+            items: {
+                src: '#newslater-popup'
+            },
+            type: 'inline'
+        }, 0);
+    });
+    /* ------------ Newslater-popup JS End ------------- */
+</script>
+{{ footer }}

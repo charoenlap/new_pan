@@ -1,0 +1,55 @@
+<h2>{{ text_title }}</h2>
+<div class="well well-sm">
+  <p>{{ text_payment }}</p>
+</div>
+<form name="payFormCcard" method="post" action="{{action}}">
+<input type="hidden" name="merchantId" value="{{merchant_id}}">
+<input type="hidden" name="amount" value="{{amount}}" >
+<input type="hidden" name="orderRef" value="{{invoice}}">
+<input type="hidden" name="currCode" value="{{code}}" >
+<input type="hidden" name="successUrl" value="{{successURL}}"> 
+<input type="hidden" name="failUrl" value="{{returnURL}}">
+<input type="hidden" name="cancelUrl" value="{{returnURL}}"> 
+<input type="hidden" name="payType" value="N">
+<input type="hidden" name="lang" value="{{language}}">
+<input type="hidden" name="remark" value="{{remark}}">
+<input type="hidden" name="deviceMode" value="{{deviceMode}}">
+{# Optional Parameter 
+<input type="hidden" name="redirect" value="30">
+<input type="hidden" name="orderRef1" value="add-ref-00001"> 
+<input type="hidden" name="orderRef2" value="add-ref-00002"> 
+<input type="hidden" name="orderRef3" value="add-ref-00003"> 
+<input type="hidden" name="orderRef4" value="add-ref-00004"> 
+<input type="hidden" name="orderRef5" value="add-ref-00005">  
+#}
+<div class="buttons">
+  <div class="pull-right">
+    {# <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" /> #}
+    <input type="submit" name="submit" value="{{ button_confirm }}" class="btn btn-primary"> 
+  </div>
+</div>
+
+
+</form>
+<script type="text/javascript"><!--
+$('#button-confirm').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=extension/payment/bbl_gateway/confirm',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-confirm').button('loading');
+		},
+		complete: function() {
+			$('#button-confirm').button('reset');
+		},
+		success: function(json) {
+			if (json['redirect']) {
+				location = json['redirect'];	
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script>

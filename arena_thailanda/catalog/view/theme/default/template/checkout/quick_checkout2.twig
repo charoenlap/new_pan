@@ -1,0 +1,287 @@
+{{ header }}
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <br>
+        <ul class="breadcrumb">
+          {% for breadcrumb in breadcrumbs %}
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+<br>
+
+<div id="checkout-checkout" class="container">
+	{% if error_warning %}
+	<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	</div>
+	{% endif %}
+	<div class="row">{{ column_left }}
+	{% if column_left and column_right %}
+	{% set class = 'col-sm-6' %}
+	{% elseif column_left or column_right %}
+	{% set class = 'col-sm-9' %}
+	{% else %}
+	{% set class = 'col-sm-12' %}
+	{% endif %}
+		<div id="content" class="{{ class }}">{{ content_top }}
+			<div class="row">
+
+				{# Box Products #}
+				<div class="col-sm-12 col-md-4 col-md-push-8 col-lg-4 col-lg-push-8">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">ส่งที่</h3>
+							<a href="{{link_shipping}}" class="pull-right" style="margin-top:-20px;">แก้ไข</a>
+						</div>
+						<div class="panel-body">
+							{{show_shipping_address}}
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">สรุปการสั่งซื้อ</h3>
+						</div>
+						<div class="panel-body">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>สินค้า</th>
+										<th>จำนวน</th>
+										<th width="35%">ราคา</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for product in products %}
+									<tr>
+										<td>
+											<a href="{{product.href}}">
+												{{product.name}}
+											</a>
+										</td>
+										<td>{{product.quantity}}</td>
+										<td>{{product.total}}</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+								<tfoot>
+									{% for total in totals %}
+									<tr>
+										<td colspan="2">{{total.title}}</td>
+										<td>{{total.text}}</td>
+									</tr>
+									{% endfor %}
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+				{# End Box Products #}
+				
+				{# Box Address #}
+				<div class="col-sm-12 col-md-8 col-md-pull-4 col-lg-8 col-lg-pull-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">ที่อยู่ที่จะจัดส่ง</h3>
+							{% if isLogged == false %}
+							<a href="{{link_login}}" class="pull-right" style="margin-top:-20px;">เข้าสู่ระบบเพื่อการสั่งซื้อที่รวดเร็ว</a>
+							{% endif %}
+						</div>
+
+						<div class="panel-body">
+							<form class="form-horizontal" role="form" id="form-checkout">
+								<div class="form-group mt-d15">
+									{% set i = 1 %}
+									{% for key, payment_method in payment_methods %}
+                    {% if i == 1 %}
+                      <input type="hidden" id="first_payment" value="{{key}}">
+                    {% endif %}
+									<div class="col-md-2 col-xs-12 p0 radio_payments">
+										<div class="radio-inline {{ i == 1 ? 'active' }}">
+											<label>
+												<input type="radio" name="payment_method" value="{{key}}" {{ i == 1 ? 'checked="checked"' }} data-term="{{payment_method.terms}}">
+                        {# {% if payment_method.code == 'pp_standard' %} #}
+                        {# <img src="image/payment/{{payment_method.code}}.png" alt="" style="width:100%;"> #}
+                        {# {% endif %} #}
+												{{payment_method.title}}
+												{# <br> #}
+												{# <img src="image/payment/{{payment_method.code}}.png" alt=""> #}
+											</label>
+										</div>
+									</div>
+									{% set i = i + 1 %}
+									{% endfor %}
+								</div>
+								{# <div class="form-group">
+									<div class="col-xs-12">
+										<button type="submit" class="btn btn-red">ดำเนินการต่อ</button>
+									</div>
+								</div> #}
+							</form>
+
+							<div class="row">
+								<div class="col-sm-12">
+									<div id="content_payment">
+									</div>
+									<br>
+								</div>
+							</div>
+
+							{# <button type="submit" form="form-checkout" class="btn btn-red">ดำเนินการต่อ</button> #}
+						</div>
+					</div>
+					<small>โดยการวางคำสั่งซื้อของคุณ, คุณยอมรับข้อตกลงของทาง sportstown-online.com ข้อตกลงและเงื่อนไข </small>
+					<br>
+				</div>
+				{# End Box Address #}
+
+			</div>
+		</div>
+		{# End #Content #}
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="modal-load">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body text-center">
+				<p>System Processing for your order, Please wait a minute for successful order.</p>
+				<p>ระบบกำลังดำเนินการสั่งซื้อให้ท่าน กรุณารอเว็บไซต์โหลดสักครู่...</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+.radio_payments img {
+	/*width:100%;*/
+	/*height: auto !important;*/
+	/*max-height: 50px;*/
+	height: 80px !important;
+}
+
+table.table thead tr th,
+table.table tfoot tr td {
+	background: #eee;
+}
+table.table tfoot tr:last-child td {
+	font-size:16px;
+	font-weight: bold;
+}
+
+.main { padding-top:130px; }
+</style>
+
+<script>
+$(document).ready(function() {
+	
+	// $('#modal-load').modal('hide');
+});
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+  $('#owl-carousel-related').owlCarousel({
+    items:6,
+    margin:5,
+    autoHeight:true,
+    autoplay:true,
+    autoplayTimeout:3000,
+    autoplayHoverPause:false
+  });
+  $('#owl-carousel-bestseller').owlCarousel({
+    items:6,
+    margin:5,
+    autoHeight:true,
+    autoplay:true,
+    autoplayTimeout:3000,
+    autoplayHoverPause:false
+  });
+});
+</script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	radioChecked();
+
+	// Load Banktransfer
+	$.post('index.php?route=checkout/quick_checkout2/payment_view', {code: $('#first_payment').val(), order_id: '{{order_id}}'}, function(data, textStatus, xhr) {
+    console.log(data);
+		var term = $('#form-checkout .radio-inline.active > label > input[type="radio"]').data('term');
+		$('#content_payment').html('Loading...');
+		$('#content_payment').html(term);
+		$('#content_payment').append(data);
+	});
+
+
+	$('#form-checkout .radio-inline > label > input[type="radio"]').change(function(event) {
+		radioChecked();
+		var payment_id = $(this).val();
+		var term = $(this).data('term');
+
+		$('#content_payment').html('Loading...');
+
+		$('#content_payment').html(term);
+		$.post('index.php?route=checkout/quick_checkout2/payment_view', {code: payment_id, order_id: '{{order_id}}'}, function(data, textStatus, xhr) {
+			$('#content_payment').append(data);
+		});
+		$.post('index.php?route=checkout/quick_checkout2/updatePaymentMethod', {code: payment_id, order_id: '{{order_id}}'}, function(data, textStatus, xhr) {
+		});
+
+	});
+
+	// Login And New Address
+	$('input[name="new_shipping_address"]').change(function(event) {
+		if ($(this).is(':checked')) {
+			$('#shipping_address').removeClass('hidden');
+			$('#form-checkout .radio').removeClass('active');
+			$('#form-checkout .radio input[type="radio"]').removeAttr('checked');
+		} else {
+			$('#shipping_address').addClass('hidden');
+			$('#form-checkout .radio:first-child').addClass('active');
+			$('#form-checkout .radio input[type="radio"]').attr('checked','checked');
+		}
+	});
+
+
+	// Checkbox Tax Bill
+	$('input[name="new_payment_address"]').change(function(event) {
+		if ($(this).is(':checked')) {
+			$('#payment_address').removeClass('hidden');
+		} else {
+			$('#payment_address').addClass('hidden');
+		}
+	});
+
+
+});
+
+function getRadioChecked() {
+	// Payment Method
+	$.each($('input[name="payment_method"]'), function(index, val){
+		if (val.checked) {
+			var valuecheck = $(this).val();
+			return valuecheck;
+		}
+	});
+}
+
+function radioChecked() {
+	$.each($('#form-checkout .radio-inline > label > input[type="radio"]'), function(index, val) {
+		// console.log(val);
+		// console.log(val.value);
+		// console.log(val.checked);
+		if (val.checked) {
+			$('#form-checkout .radio-inline').removeClass('active');
+			$(this).parents('.radio-inline').addClass('active');
+		}
+	});
+}
+</script>
+{{ footer }}

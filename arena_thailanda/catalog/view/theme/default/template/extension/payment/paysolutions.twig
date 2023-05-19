@@ -1,0 +1,37 @@
+<form method="post" id="form_paysolutions" action="{{ url }}">
+	<input type="hidden" id="merchantid" 		name="merchantid"  	value="{{ merchantid }}" />
+	<input type="hidden" id="productdetail" name="productdetail" value="{{ description }}" />
+	<input type="hidden" id="total" 	    	name="total"  			value="{{ total }}" />
+	<input type="hidden" id="refno" 			name="refno" 		value="{{ refno }}" />
+	<input type="hidden" id="cc" 			name="cc" 		value="{{ cc }}" />
+	<input type="hidden" id="customeremail" 	name="customeremail"   value="{{ customeremail }}" />
+	<input type="hidden" id="postbackurl" 	name="postbackurl"   value="{{ postbackurl }}" />
+	<input type="hidden" id="returnurl" 	name="returnurl"   value="{{ returnurl }}" />
+	<div class="buttons">
+		<div class="pull-right">
+			<input type="submit" value="Confirm" id="button-confirm" class="btn btn-primary" data-loading-text="{{ text_loading }}" />
+		</div>
+	</div>
+</form>
+<script type="text/javascript"><!--
+    $('#button-confirm').on('click', function() {
+        $.ajax({
+            url: 'index.php?route=extension/payment/paysolutions/confirm',
+            dataType: 'json',
+            beforeSend: function() {
+                $('#button-confirm').button('loading');
+            },
+            complete: function() {
+                $('#button-confirm').button('reset');
+            },
+            success: function(json) {
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+            }
+
+        });
+    });
+    //--></script>
+
+

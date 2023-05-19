@@ -1,0 +1,39 @@
+<h2>{{ text_instruction }}</h2>
+<p><b>{{ text_description }}</b></p>
+<div class="well well-sm">
+  <p>{{ bank }}</p>
+  <p>{{ text_payment }}</p>
+</div>
+<div class="buttons">
+  <div class="pull-right">
+    <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-confirm').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=extension/payment/bank_kbank/confirm',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-confirm').html('loading');
+			$('#button-confirm').attr('disabled', 'disabled');
+		},
+		complete: function() {
+			$('#button-confirm').html('reset');
+			$('#button-confirm').attr('disabled', 'disabled');
+		},
+		success: function(json) {
+			$('#button-confirm').html('{{ button_confirm }}');
+			$('#button-confirm').removeAttr('disabled');
+			if (json['redirect']) {
+				location = json['redirect'];	
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			$('#button-confirm').html('{{ button_confirm }}');
+			$('#button-confirm').removeAttr('disabled');
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+//--></script>
